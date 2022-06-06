@@ -1,0 +1,16 @@
+.students-container {
+    padding: 42px;
+}
+
+.students-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.students-list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    row-gap: 20px;
+    column-gap: 20px;
+}
