@@ -4,9 +4,7 @@ import {StudentsData} from "../../resources/Data";
 import {Student} from "../../types/Models";
 import "./Students.css"
 import StudentModal from "./components/StudentModal";
-import {Button, Card, Typography} from "@mui/material";
-import {Edit, PlusOne} from "@mui/icons-material";
-import IconButton from "@mui/material/IconButton";
+import {Button, Typography} from "@mui/material";
 
 const Students = () => {
     const [students, setStudents] = useState<Student[]>(StudentsData);

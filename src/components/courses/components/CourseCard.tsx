@@ -5,13 +5,11 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Delete, Edit} from "@mui/icons-material";
-import {Student} from "../../../types/Models";
+import {Course} from "../../../types/Models";
 import {Chip} from "@mui/material";
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -30,12 +28,12 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 }));
 
 interface Props {
-    student: Student;
-    onEdit: (student: Student) => void;
-    onDelete: (studentId: number) => void;
+    course: Course;
+    onEdit: (course: Course) => void;
+    onDelete: (courseCode: number) => void;
 }
 
-const StudentCard = ({student, onEdit, onDelete}: Props) => {
+const CourseCard = ({course, onEdit, onDelete}: Props) => {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -44,34 +42,21 @@ const StudentCard = ({student, onEdit, onDelete}: Props) => {
 
     return (
         <Card sx={{ width: 360, display: "flex", flexDirection: "column", justifyContent: "space-between", marginTop: 3, marginRight: 3 }}
-              style={!expanded ? {maxHeight: 192} : {}}>
+              style={!expanded ? {maxHeight: 216} : {}}>
             <CardHeader
-                avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        {student.firstName[0] + student.lastName[0]}
-                    </Avatar>
-                }
-                title={`${student.firstName} ${student.lastName}`}
-                subheader={`ID: #${student.id}`}
+                title={course.title}
+                subheader={`Code: #${course.code}`}
             />
             <CardContent>
-                {student.courses.length > 0 ?
-                    <div style={{display: "flex", alignItems: "center"}}>
-                        <Typography style={{marginRight: 6}}>
-                            Last course:
-                        </Typography>
-                        <Chip label={student.courses[student.courses?.length - 1]} variant="outlined"/>
-                    </div> :
-                    <Typography variant="body2" color="text.secondary">
-                        The student has no courses.
-                    </Typography>
-                }
+                <Typography variant="body2" color="text.secondary">
+                    {course.description}
+                </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton color={"primary"} onClick={() => onEdit(student)}>
+                <IconButton color={"primary"} onClick={() => onEdit(course)}>
                     <Edit />
                 </IconButton>
-                <IconButton color={"error"} onClick={() => onDelete(student.id)} >
+                <IconButton color={"error"} onClick={() => onDelete(course.code)} >
                     <Delete />
                 </IconButton>
                 <ExpandMore
@@ -84,15 +69,15 @@ const StudentCard = ({student, onEdit, onDelete}: Props) => {
                 </ExpandMore>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent style={{marginTop: 0}}>
+                <CardContent style={{paddingTop: 0}}>
                     <Typography variant="h6">
-                        Courses
+                        Students
                     </Typography>
-                    {student.courses.map(course => <Chip label={course} variant="outlined" style={{marginRight: 10, marginTop: 10}}/>)}
+                    {course.students.map(student => <Chip label={student} variant="outlined" style={{marginTop: 10, marginRight: 10}}/>)}
                 </CardContent>
             </Collapse>
         </Card>
     );
 }
 
-export default StudentCard;
+export default CourseCard;

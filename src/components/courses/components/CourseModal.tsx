@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import {Student} from "../../../types/Models";
+import {Course} from "../../../types/Models";
 import {
     Checkbox, FormControl,
     InputLabel,
@@ -15,7 +15,7 @@ import {
     TextField
 } from "@mui/material";
 import {useEffect, useState} from "react";
-import {CoursesData} from "../../../resources/Data";
+import {StudentsData} from "../../../resources/Data";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -40,33 +40,33 @@ const MenuProps = {
     },
 };
 
+const newCourse = {
+    code: Math.floor(100000 + Math.random() * 900000),
+    title: "",
+    description: "",
+    students: []
+}
+
 interface Props {
     open: boolean;
     onClose: () => void;
-    student?: Student;
-    onSave: (newStudent: Student) => void;
+    course?: Course;
+    onSave: (newCourse: Course) => void;
 }
 
-const StudentModal = ({open, onClose, student, onSave}: Props) => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [courses, setCourses] = React.useState<string[]>([]);
+const CourseModal = ({open, onClose, course, onSave}: Props) => {
+    const [updatedCourse, setUpdatedCourse] = useState<Course>(newCourse);
 
     useEffect(() => {
-        if (student) {
-            setFirstName(student.firstName);
-            setLastName(student.lastName);
-            setCourses(student.courses);
-        }
-    }, [student])
+        if (course) setUpdatedCourse(course);
+    }, [course])
 
-    const handleChange = (event: SelectChangeEvent<typeof courses>) => {
+    const handleChange = (event: SelectChangeEvent<typeof updatedCourse.students>) => {
         const {
             target: { value },
         } = event;
-        setCourses(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const updatedStudents = typeof value === 'string' ? value.split(',') : value;
+        setUpdatedCourse({...updatedCourse, students: updatedStudents})
     };
 
     return (
@@ -78,27 +78,31 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    {student ? "Edit student" : "Create student"}
+                    {course ? "Edit course" : "Create course"}
                 </Typography>
                 <div style={{display: "flex", flexDirection: "column"}}>
-                    <TextField style={{marginTop: 16}} label="First Name" variant="outlined" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                    <TextField style={{marginTop: 16}} label="Last Name" variant="outlined" value={lastName} onChange={e => setLastName(e.target.value)} />
+                    <TextField style={{marginTop: 16}} label="Title" variant="outlined" value={updatedCourse.title}
+                               onChange={e => setUpdatedCourse({...updatedCourse, title: e.target.value})}
+                    />
+                    <TextField style={{marginTop: 16}} label="Description" multiline variant="outlined"
+                               value={updatedCourse.description} onChange={e => setUpdatedCourse({...updatedCourse, description: e.target.value})}
+                    />
                     <FormControl style={{marginTop: 16}}>
-                        <InputLabel id="demo-multiple-checkbox-label">Courses</InputLabel>
+                        <InputLabel id="demo-multiple-checkbox-label">Students</InputLabel>
                         <Select
                             labelId="demo-multiple-checkbox-label"
                             id="demo-multiple-checkbox"
                             multiple
-                            value={courses}
+                            value={updatedCourse.students}
                             onChange={handleChange}
-                            input={<OutlinedInput label="Courses" />}
+                            input={<OutlinedInput label="Students" />}
                             renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
                         >
-                            {CoursesData.map((course) => (
-                                <MenuItem key={course.title} value={course.title}>
-                                    <Checkbox checked={courses.indexOf(course.title) > -1} />
-                                    <ListItemText primary={course.title} />
+                            {StudentsData.map((student) => (
+                                <MenuItem key={`${student.firstName} ${student.lastName}`} value={`${student.firstName} ${student.lastName}`}>
+                                    <Checkbox checked={updatedCourse.students.indexOf(`${student.firstName} ${student.lastName}`) > -1} />
+                                    <ListItemText primary={`${student.firstName} ${student.lastName}`} />
                                 </MenuItem>
                             ))}
                         </Select>
@@ -108,10 +112,8 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
                     <Button variant="outlined" color="error" style={{marginRight: 12}} onClick={onClose}>Cancel</Button>
                     <Button variant={"outlined"} color={"primary"}
                             onClick={() => {
-                                onSave({id: student?.id || Math.floor(100000 + Math.random() * 900000), firstName, lastName, courses: courses || []});
-                                setFirstName("");
-                                setLastName("");
-                                setCourses([]);
+                                onSave(updatedCourse);
+                                setUpdatedCourse(newCourse);
                             }}
                     >
                         Save
@@ -122,4 +124,4 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
     );
 }
 
-export default StudentModal;
+export default CourseModal;

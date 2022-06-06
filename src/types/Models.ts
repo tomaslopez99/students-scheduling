@@ -2,12 +2,12 @@ export type Student = {
     id: number,
     firstName: string,
     lastName: string,
-    courses: Course[]
+    courses: string[]
 }
 
 export type Course = {
     code: number,
     title: string,
     description: string,
-    students: Student[]
+    students: string[]
 }

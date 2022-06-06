@@ -50,19 +50,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const pages = ['Students', 'Courses'];
+export enum Page {
+    Students = "Students",
+    Courses = "Courses"
+}
 
-const ResponsiveAppBar = () => {
+const pages = [Page.Students, Page.Courses];
+
+interface Props {
+    onPageSelected: (page: Page) => void;
+}
+
+const Navbar = ({onPageSelected}: Props) => {
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
                 <Toolbar>
                     <Box style={{ flexGrow: 1, display: 'flex' }}>
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={() => {}}
+                                onClick={() => onPageSelected(page)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -79,9 +87,8 @@ const ResponsiveAppBar = () => {
                         />
                     </Search>
                 </Toolbar>
-            </Container>
         </AppBar>
     );
 };
 
-export default ResponsiveAppBar;
+export default Navbar;

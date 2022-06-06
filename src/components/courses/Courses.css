@@ -1,14 +1,14 @@
-.students-container {
+.courses-container {
     padding: 42px;
 }
 
-.students-header {
+.courses-header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
 }
 
-.students-list {
+.courses-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
