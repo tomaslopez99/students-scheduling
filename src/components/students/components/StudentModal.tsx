@@ -81,10 +81,10 @@ const StudentModal = ({open, onClose, student, onSave, courses}: Props) => {
                     {student ? "Edit student" : "Create student"}
                 </Typography>
                 <div style={{display: "flex", flexDirection: "column"}}>
-                    <TextField style={{marginTop: 16}} label="First Name" variant="outlined" value={updatedStudent.firstName}
+                    <TextField style={{marginTop: 16}} required label="First Name" variant="outlined" value={updatedStudent.firstName}
                                onChange={e => setUpdatedStudent({...updatedStudent, firstName: e.target.value})}
                     />
-                    <TextField style={{marginTop: 16}} label="Last Name" variant="outlined" value={updatedStudent.lastName}
+                    <TextField style={{marginTop: 16}} required label="Last Name" variant="outlined" value={updatedStudent.lastName}
                                onChange={e => setUpdatedStudent({...updatedStudent, lastName: e.target.value})}
                     />
                     <FormControl style={{marginTop: 16}}>
@@ -110,7 +110,7 @@ const StudentModal = ({open, onClose, student, onSave, courses}: Props) => {
                 </div>
                 <div style={{float: "right", marginTop: 16}}>
                     <Button variant="outlined" color="error" style={{marginRight: 12}} onClick={onClose}>Cancel</Button>
-                    <Button variant={"outlined"} color={"primary"}
+                    <Button variant={"outlined"} color={"primary"} disabled={!updatedStudent.firstName || !updatedStudent.lastName}
                             onClick={() => {
                                 onSave(updatedStudent);
                                 setUpdatedStudent(newStudent);

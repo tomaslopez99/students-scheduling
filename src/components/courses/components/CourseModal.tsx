@@ -81,10 +81,10 @@ const CourseModal = ({open, onClose, course, onSave, students}: Props) => {
                     {course ? "Edit course" : "Create course"}
                 </Typography>
                 <div style={{display: "flex", flexDirection: "column"}}>
-                    <TextField style={{marginTop: 16}} label="Title" variant="outlined" value={updatedCourse.title}
+                    <TextField style={{marginTop: 16}} required label="Title" variant="outlined" value={updatedCourse.title}
                                onChange={e => setUpdatedCourse({...updatedCourse, title: e.target.value})}
                     />
-                    <TextField style={{marginTop: 16}} label="Description" multiline variant="outlined"
+                    <TextField style={{marginTop: 16}} required label="Description" multiline variant="outlined"
                                value={updatedCourse.description} onChange={e => setUpdatedCourse({...updatedCourse, description: e.target.value})}
                     />
                     <FormControl style={{marginTop: 16}}>
@@ -110,7 +110,7 @@ const CourseModal = ({open, onClose, course, onSave, students}: Props) => {
                 </div>
                 <div style={{float: "right", marginTop: 16}}>
                     <Button variant="outlined" color="error" style={{marginRight: 12}} onClick={onClose}>Cancel</Button>
-                    <Button variant={"outlined"} color={"primary"}
+                    <Button variant={"outlined"} color={"primary"} disabled={!updatedCourse.title || !updatedCourse.description}
                             onClick={() => {
                                 onSave(updatedCourse);
                                 setUpdatedCourse(newCourse);
