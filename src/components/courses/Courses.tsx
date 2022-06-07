@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import StudentCard from "./components/CourseCard";
-import {CoursesData} from "../../resources/Data";
 import {Course} from "../../types/Models";
 import "./Courses.css"
 import {Button, Typography} from "@mui/material";
@@ -16,7 +15,6 @@ interface Props {
 const Courses = ({courses, setCourses, searchText}: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [editCourse, setEditCourse] = useState<Course | undefined>();
-
 
     const onStudentDeleted = (courseCode: number) => {
         setCourses(courses.filter(course => course.code !== courseCode));

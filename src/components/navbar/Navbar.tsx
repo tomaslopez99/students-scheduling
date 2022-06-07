@@ -2,12 +2,10 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import {useState} from "react";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -65,8 +63,6 @@ interface Props {
 }
 
 const Navbar = ({onPageSelected, search, onSearch}: Props) => {
-
-    console.log(search);
 
     return (
         <AppBar position="static">

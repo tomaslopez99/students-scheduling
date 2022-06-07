@@ -40,6 +40,13 @@ const MenuProps = {
     },
 };
 
+const newStudent: Student = {
+    id: Math.floor(100000 + Math.random() * 900000),
+    firstName: "",
+    lastName: "",
+    courses: []
+}
+
 interface Props {
     open: boolean;
     onClose: () => void;
@@ -48,25 +55,18 @@ interface Props {
 }
 
 const StudentModal = ({open, onClose, student, onSave}: Props) => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [courses, setCourses] = React.useState<string[]>([]);
+    const [updatedStudent, setUpdatedStudent] = useState<Student>(newStudent);
 
     useEffect(() => {
-        if (student) {
-            setFirstName(student.firstName);
-            setLastName(student.lastName);
-            setCourses(student.courses);
-        }
+        if (student) setUpdatedStudent(student);
     }, [student])
 
-    const handleChange = (event: SelectChangeEvent<typeof courses>) => {
+    const handleChange = (event: SelectChangeEvent<typeof updatedStudent.courses>) => {
         const {
             target: { value },
         } = event;
-        setCourses(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const updatedCourses = typeof value === 'string' ? value.split(',') : value;
+        setUpdatedStudent({...updatedStudent, courses: updatedCourses})
     };
 
     return (
@@ -81,15 +81,19 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
                     {student ? "Edit student" : "Create student"}
                 </Typography>
                 <div style={{display: "flex", flexDirection: "column"}}>
-                    <TextField style={{marginTop: 16}} label="First Name" variant="outlined" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                    <TextField style={{marginTop: 16}} label="Last Name" variant="outlined" value={lastName} onChange={e => setLastName(e.target.value)} />
+                    <TextField style={{marginTop: 16}} label="First Name" variant="outlined" value={updatedStudent.firstName}
+                               onChange={e => setUpdatedStudent({...updatedStudent, firstName: e.target.value})}
+                    />
+                    <TextField style={{marginTop: 16}} label="Last Name" variant="outlined" value={updatedStudent.lastName}
+                               onChange={e => setUpdatedStudent({...updatedStudent, lastName: e.target.value})}
+                    />
                     <FormControl style={{marginTop: 16}}>
                         <InputLabel id="demo-multiple-checkbox-label">Courses</InputLabel>
                         <Select
                             labelId="demo-multiple-checkbox-label"
                             id="demo-multiple-checkbox"
                             multiple
-                            value={courses}
+                            value={updatedStudent.courses}
                             onChange={handleChange}
                             input={<OutlinedInput label="Courses" />}
                             renderValue={(selected) => selected.join(', ')}
@@ -97,7 +101,7 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
                         >
                             {CoursesData.map((course) => (
                                 <MenuItem key={course.title} value={course.title}>
-                                    <Checkbox checked={courses.indexOf(course.title) > -1} />
+                                    <Checkbox checked={updatedStudent.courses.indexOf(course.title) > -1} />
                                     <ListItemText primary={course.title} />
                                 </MenuItem>
                             ))}
@@ -108,10 +112,8 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
                     <Button variant="outlined" color="error" style={{marginRight: 12}} onClick={onClose}>Cancel</Button>
                     <Button variant={"outlined"} color={"primary"}
                             onClick={() => {
-                                onSave({id: student?.id || Math.floor(100000 + Math.random() * 900000), firstName, lastName, courses: courses || []});
-                                setFirstName("");
-                                setLastName("");
-                                setCourses([]);
+                                onSave(updatedStudent);
+                                setUpdatedStudent(newStudent);
                             }}
                     >
                         Save
