@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import {useState} from "react";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -59,9 +60,13 @@ const pages = [Page.Students, Page.Courses];
 
 interface Props {
     onPageSelected: (page: Page) => void;
+    search?: string;
+    onSearch: Function;
 }
 
-const Navbar = ({onPageSelected}: Props) => {
+const Navbar = ({onPageSelected, search, onSearch}: Props) => {
+
+    console.log(search);
 
     return (
         <AppBar position="static">
@@ -84,6 +89,8 @@ const Navbar = ({onPageSelected}: Props) => {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            value={search}
+                            onChange={(e) => onSearch(e.target.value)}
                         />
                     </Search>
                 </Toolbar>

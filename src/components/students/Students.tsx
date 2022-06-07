@@ -1,13 +1,18 @@
 import React, {useState} from "react";
 import StudentCard from "./components/StudentCard";
-import {StudentsData} from "../../resources/Data";
 import {Student} from "../../types/Models";
 import "./Students.css"
 import StudentModal from "./components/StudentModal";
 import {Button, Typography} from "@mui/material";
+import {filterByValue} from "../../utils/Filter";
 
-const Students = () => {
-    const [students, setStudents] = useState<Student[]>(StudentsData);
+interface Props {
+    students: Student[];
+    setStudents: Function;
+    searchText: string;
+}
+
+const Students = ({students, setStudents, searchText}: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [editStudent, setEditStudent] = useState<Student | undefined>();
 
@@ -46,7 +51,7 @@ const Students = () => {
                     }}
                     student={editStudent} onSave={onSavedStudent}
                 />
-                {students.map(student =>
+                {filterByValue(students, searchText).map(student =>
                     <StudentCard student={student} onEdit={onEditStudent} onDelete={onStudentDeleted}/>
                 )}
             </div>

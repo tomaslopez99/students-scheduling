@@ -5,9 +5,15 @@ import {Course} from "../../types/Models";
 import "./Courses.css"
 import {Button, Typography} from "@mui/material";
 import CourseModal from "./components/CourseModal";
+import {filterByValue} from "../../utils/Filter";
 
-const Courses = () => {
-    const [courses, setCourses] = useState<Course[]>(CoursesData);
+interface Props {
+    courses: Course[];
+    setCourses: Function;
+    searchText: string;
+}
+
+const Courses = ({courses, setCourses, searchText}: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [editCourse, setEditCourse] = useState<Course | undefined>();
 
@@ -46,7 +52,7 @@ const Courses = () => {
                     }}
                     course={editCourse} onSave={onSavedCourse}
                 />
-                {courses.map(course =>
+                {filterByValue(courses, searchText).map(course =>
                     <StudentCard course={course} onEdit={onEditCourse} onDelete={onStudentDeleted}/>
                 )}
             </div>
