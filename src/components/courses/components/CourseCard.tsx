@@ -30,7 +30,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 interface Props {
     course: Course;
     onEdit: (course: Course) => void;
-    onDelete: (courseCode: number) => void;
+    onDelete: (course: Course) => void;
 }
 
 const CourseCard = ({course, onEdit, onDelete}: Props) => {
@@ -56,7 +56,7 @@ const CourseCard = ({course, onEdit, onDelete}: Props) => {
                 <IconButton color={"primary"} onClick={() => onEdit(course)}>
                     <Edit />
                 </IconButton>
-                <IconButton color={"error"} onClick={() => onDelete(course.code)} >
+                <IconButton color={"error"} onClick={() => onDelete(course)} >
                     <Delete />
                 </IconButton>
                 <ExpandMore

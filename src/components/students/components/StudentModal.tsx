@@ -15,7 +15,6 @@ import {
     TextField
 } from "@mui/material";
 import {useEffect, useState} from "react";
-import {CoursesData} from "../../../resources/Data";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -52,9 +51,10 @@ interface Props {
     onClose: () => void;
     student?: Student;
     onSave: (newStudent: Student) => void;
+    courses: string[]
 }
 
-const StudentModal = ({open, onClose, student, onSave}: Props) => {
+const StudentModal = ({open, onClose, student, onSave, courses}: Props) => {
     const [updatedStudent, setUpdatedStudent] = useState<Student>(newStudent);
 
     useEffect(() => {
@@ -99,10 +99,10 @@ const StudentModal = ({open, onClose, student, onSave}: Props) => {
                             renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
                         >
-                            {CoursesData.map((course) => (
-                                <MenuItem key={course.title} value={course.title}>
-                                    <Checkbox checked={updatedStudent.courses.indexOf(course.title) > -1} />
-                                    <ListItemText primary={course.title} />
+                            {courses.map((course) => (
+                                <MenuItem key={course} value={course}>
+                                    <Checkbox checked={updatedStudent.courses.indexOf(course) > -1} />
+                                    <ListItemText primary={course} />
                                 </MenuItem>
                             ))}
                         </Select>

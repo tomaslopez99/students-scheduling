@@ -37,31 +37,31 @@ export const CoursesData: Course[] = [
   {
     code: 845343,
     title: "Computer Systems Security",
-    description: "Learn the basics of security",
-    students: ["Susan Connor", "Margaret Adelman"]
+    description: "Learn the basics of Computer Security.",
+    students: ["Rick Novak", "Ronald Barr"]
   },
   {
     code: 504349,
     title: "Machine Learning",
-    description: "Learn machine learning",
-    students: ["Susan Connor", "Margaret Adelman", "Rick Novak"]
+    description: "Learn the basics Machine Learning.",
+    students: ["Rick Novak", "Ronald Barr", "Roger Lum"]
   },
   {
     code: 124832,
     title: "Object Oriented Programming",
-    description: "Learn the basics of object oriented programming using Java",
-    students: ["Rick Novak"]
+    description: "Learn the basics of Object Oriented Programming using Java.",
+    students: ["Susan Connor", "Ronald Barr"]
   },
   {
     code: 432987,
     title: "Mathematics",
-    description: "Learn the basics of Mathematics",
-    students: []
+    description: "Learn the basics of Mathematics.",
+    students: ["Rick Novak"]
   },
   {
     code: 732493,
     title: "Creating Dynamic Websites",
-    description: "Create your first dynamic website.",
-    students: ["Margaret Adelman"]
+    description: "Create your first dynamic website using the latest frameworks.",
+    students: []
   }
 ];

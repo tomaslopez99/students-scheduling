@@ -32,7 +32,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 interface Props {
     student: Student;
     onEdit: (student: Student) => void;
-    onDelete: (studentId: number) => void;
+    onDelete: (student: Student) => void;
 }
 
 const StudentCard = ({student, onEdit, onDelete}: Props) => {
@@ -71,7 +71,7 @@ const StudentCard = ({student, onEdit, onDelete}: Props) => {
                 <IconButton color={"primary"} onClick={() => onEdit(student)}>
                     <Edit />
                 </IconButton>
-                <IconButton color={"error"} onClick={() => onDelete(student.id)} >
+                <IconButton color={"error"} onClick={() => onDelete(student)} >
                     <Delete />
                 </IconButton>
                 <ExpandMore

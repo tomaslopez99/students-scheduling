@@ -16,8 +16,12 @@ function App() {
             <Navbar onPageSelected={(page) => {
                 setActivePage(page);
             }} onSearch={setSearchText} search={searchText} />
-            {activePage === Page.Students && <Students searchText={searchText} students={students} setStudents={setStudents}/>}
-            {activePage === Page.Courses && <Courses searchText={searchText} courses={courses} setCourses={setCourses}/>}
+            {activePage === Page.Students &&
+                <Students searchText={searchText} students={students} setStudents={setStudents} courses={courses} setCourses={setCourses} />
+            }
+            {activePage === Page.Courses &&
+                <Courses searchText={searchText} courses={courses} setCourses={setCourses} students={students} setStudents={setStudents}/>
+            }
         </div>
     );
 }
